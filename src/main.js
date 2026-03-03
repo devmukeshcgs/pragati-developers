@@ -329,7 +329,7 @@ generateBlocks(currentFloorCount)
 // during development the code will also try `/src/` locations to make testing
 // easier, but `/src/` is not available after build.
 async function loadData() {
-  const files = ['building00.json', 'building01.json', 'building02.json']
+  const files = ['building00.json', 'building01.json', 'building02.json', 'building03.json']
   buildingList = []
 
   // helper to try fetching from possible locations
