@@ -1,0 +1,245 @@
+[
+    {
+        "buildingId": "B002",
+        "name": "Green Valley Residency",
+        "type": "Residential",
+        "address": {
+            "street": "Station Road",
+            "city": "Karjat",
+            "state": "Maharashtra",
+            "country": "India",
+            "pincode": "410201"
+        },
+        "yearBuilt": 2022,
+        "amenities": [
+            "Lift",
+            "Parking",
+            "Security",
+            "CCTV"
+        ],
+        "floors": [
+            {
+                "floorNumber": 1,
+                "totalFlats": 10,
+                "units": [
+                    {
+                        "unitNumber": "101",
+                        "type": "1BHK",
+                        "areaSqFt": 600,
+                        "status": "Occupied",
+                        "tenant": {
+                            "name": "Rahul Sharma",
+                            "phone": "9876543210"
+                        }
+                    },
+                    {
+                        "unitNumber": "102",
+                        "type": "1BHK",
+                        "areaSqFt": 600,
+                        "status": "Vacant",
+                        "tenant": null
+                    },
+                    {
+                        "unitNumber": "103",
+                        "type": "2BHK",
+                        "areaSqFt": 900,
+                        "status": "Occupied",
+                        "tenant": {
+                            "name": "Anita Verma",
+                            "phone": "9123456780"
+                        }
+                    },
+                    {
+                        "unitNumber": "104",
+                        "type": "2BHK",
+                        "areaSqFt": 900,
+                        "status": "Vacant",
+                        "tenant": null
+                    },
+                    {
+                        "unitNumber": "105",
+                        "type": "1BHK",
+                        "areaSqFt": 600,
+                        "status": "Occupied",
+                        "tenant": {
+                            "name": "Vikas Patil",
+                            "phone": "9988776655"
+                        }
+                    },
+                    {
+                        "unitNumber": "106",
+                        "type": "1BHK",
+                        "areaSqFt": 600,
+                        "status": "Vacant",
+                        "tenant": null
+                    },
+                    {
+                        "unitNumber": "107",
+                        "type": "2BHK",
+                        "areaSqFt": 900,
+                        "status": "Occupied",
+                        "tenant": {
+                            "name": "Meera Joshi",
+                            "phone": "9090909090"
+                        }
+                    },
+                    {
+                        "unitNumber": "108",
+                        "type": "2BHK",
+                        "areaSqFt": 900,
+                        "status": "Vacant",
+                        "tenant": null
+                    },
+                    {
+                        "unitNumber": "109",
+                        "type": "1BHK",
+                        "areaSqFt": 600,
+                        "status": "Occupied",
+                        "tenant": {
+                            "name": "Amit Singh",
+                            "phone": "9012345678"
+                        }
+                    },
+                    {
+                        "unitNumber": "110",
+                        "type": "2BHK",
+                        "areaSqFt": 900,
+                        "status": "Vacant",
+                        "tenant": null
+                    }
+                ]
+            },
+            {
+                "floorNumber": 2,
+                "totalFlats": 4,
+                "units": [
+                    {
+                        "unitNumber": "201",
+                        "type": "3BHK",
+                        "areaSqFt": 1200,
+                        "status": "Occupied",
+                        "tenant": {
+                            "name": "Sneha Kulkarni",
+                            "phone": "9345678901"
+                        }
+                    },
+                    {
+                        "unitNumber": "202",
+                        "type": "3BHK",
+                        "areaSqFt": 1200,
+                        "status": "Vacant",
+                        "tenant": null
+                    },
+                    {
+                        "unitNumber": "203",
+                        "type": "2BHK",
+                        "areaSqFt": 950,
+                        "status": "Occupied",
+                        "tenant": {
+                            "name": "Rohit Nair",
+                            "phone": "9876501234"
+                        }
+                    },
+                    {
+                        "unitNumber": "204",
+                        "type": "2BHK",
+                        "areaSqFt": 950,
+                        "status": "Vacant",
+                        "tenant": null
+                    }
+                ]
+            },
+            {
+                "floorNumber": 3,
+                "totalFlats": 10,
+                "units": [
+                    {
+                        "unitNumber": "301",
+                        "type": "1BHK",
+                        "areaSqFt": 600,
+                        "status": "Vacant",
+                        "tenant": null
+                    },
+                    {
+                        "unitNumber": "302",
+                        "type": "1BHK",
+                        "areaSqFt": 600,
+                        "status": "Occupied",
+                        "tenant": {
+                            "name": "Priya Shah",
+                            "phone": "9786543210"
+                        }
+                    },
+                    {
+                        "unitNumber": "303",
+                        "type": "2BHK",
+                        "areaSqFt": 900,
+                        "status": "Vacant",
+                        "tenant": null
+                    },
+                    {
+                        "unitNumber": "304",
+                        "type": "2BHK",
+                        "areaSqFt": 900,
+                        "status": "Occupied",
+                        "tenant": {
+                            "name": "Kunal Mehta",
+                            "phone": "9898989898"
+                        }
+                    },
+                    {
+                        "unitNumber": "305",
+                        "type": "1BHK",
+                        "areaSqFt": 600,
+                        "status": "Vacant",
+                        "tenant": null
+                    },
+                    {
+                        "unitNumber": "306",
+                        "type": "1BHK",
+                        "areaSqFt": 600,
+                        "status": "Occupied",
+                        "tenant": {
+                            "name": "Neha Kapoor",
+                            "phone": "9765432109"
+                        }
+                    },
+                    {
+                        "unitNumber": "307",
+                        "type": "2BHK",
+                        "areaSqFt": 900,
+                        "status": "Vacant",
+                        "tenant": null
+                    },
+                    {
+                        "unitNumber": "308",
+                        "type": "2BHK",
+                        "areaSqFt": 900,
+                        "status": "Occupied",
+                        "tenant": {
+                            "name": "Arjun Rao",
+                            "phone": "9654321098"
+                        }
+                    },
+                    {
+                        "unitNumber": "309",
+                        "type": "1BHK",
+                        "areaSqFt": 600,
+                        "status": "Vacant",
+                        "tenant": null
+                    },
+                    {
+                        "unitNumber": "310",
+                        "type": "2BHK",
+                        "areaSqFt": 900,
+                        "status": "Occupied",
+                        "tenant": {
+                            "name": "Divya Iyer",
+                            "phone": "9543210987"
+                        }
+                    }
+                ]
+            }             
+        ]
+    }
+]

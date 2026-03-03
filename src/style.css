@@ -85,6 +85,13 @@ label { color: #ffcc00; font-weight: 600; }
   font-size: 13px;
 }
 
+#buildingSelect {
+  background: rgba(0,0,0,0.6);
+  color: #ffcc00;
+  border: 1px solid #333;
+  padding: 6px;
+}
+
 /* Info panel on the right */
 #info {
   position: absolute;

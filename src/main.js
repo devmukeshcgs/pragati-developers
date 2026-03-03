@@ -82,9 +82,11 @@ let autoRotate = true
 let currentFloorCount = 5
 let currentFocusedFloor = 0 // 0 = none, 1..n = floor index
 let buildingData = null
+let buildingList = []
 
 // UI references
 const navButtonsContainer = document.getElementById('navButtons')
+const buildingSelect = document.getElementById('buildingSelect')
 const floorCountInput = document.getElementById('floorCount')
 const floorCountLabel = document.getElementById('floorCountLabel')
 const zoomInBtn = document.getElementById('zoomIn')
@@ -146,6 +148,21 @@ function resetView() {
     orthoCamera.zoom = computeOrthographicZoom(totalHeight)
     orthoCamera.updateProjectionMatrix()
   }
+}
+
+function selectBuilding(index) {
+  if (!buildingList || !buildingList[index]) return
+  buildingData = buildingList[index]
+  // set floor count from chosen building
+  currentFloorCount = (buildingData.floors || []).length || 1
+  floorCountInput.max = Math.max(1, currentFloorCount)
+  floorCountInput.value = currentFloorCount
+  floorCountLabel.textContent = String(currentFloorCount)
+  // regenerate blocks and UI
+  generateBlocks(currentFloorCount)
+  resetView()
+  showBuildingInfo()
+  buildGUI()
 }
 
 
@@ -306,27 +323,62 @@ toggleRotateBtn.addEventListener('click', () => {
 })
 
 generateBlocks(currentFloorCount)
-// load data and initialize scene from file
+// load multiple building files and initialize the selector
 async function loadData() {
-  try {
-    const res = await fetch('/src/data.json')
-    const arr = await res.json()
-    if (!arr || arr.length === 0) return
-    buildingData = arr[0]
-    // set floor count from data
-    currentFloorCount = (buildingData.floors || []).length || currentFloorCount
-    // update slider max/value
-    floorCountInput.max = Math.max(1, currentFloorCount)
-    floorCountInput.value = currentFloorCount
-    floorCountLabel.textContent = String(currentFloorCount)
-    // generate blocks and recentre
-    generateBlocks(currentFloorCount)
-    resetView()
-    showBuildingInfo()
-    buildGUI()
-  } catch (e) {
-    console.error('Failed to load data.json', e)
-    // fallback to default generation
+  const files = ['building00.json', 'building01.json', 'building02.json']
+  const base = '/src/'
+  buildingList = []
+
+  for (const f of files) {
+    try {
+      const res = await fetch(base + f)
+      if (!res.ok) continue
+      const json = await res.json()
+      // accept either an array or a single object
+      if (Array.isArray(json)) {
+        json.forEach(item => buildingList.push(item))
+      } else if (json && typeof json === 'object') {
+        buildingList.push(json)
+      }
+    } catch (err) {
+      // ignore missing files
+      // console.warn('missing', f, err)
+    }
+  }
+
+  // fallback: try old single file `data.json` if no building files found
+  if (buildingList.length === 0) {
+    try {
+      const res = await fetch(base + 'data.json')
+      if (res.ok) {
+        const arr = await res.json()
+        if (Array.isArray(arr)) buildingList = arr.slice()
+      }
+    } catch (e) {
+      console.error('No building files found')
+    }
+  }
+
+  // populate selector
+  if (buildingSelect) {
+    buildingSelect.innerHTML = ''
+    buildingList.forEach((b, idx) => {
+      const opt = document.createElement('option')
+      opt.value = String(idx)
+      opt.textContent = b.name ? `${b.name} (${b.buildingId || idx})` : (b.buildingId || `Building ${idx+1}`)
+      buildingSelect.appendChild(opt)
+    })
+    buildingSelect.addEventListener('change', (e) => {
+      const idx = parseInt(e.target.value, 10)
+      selectBuilding(idx)
+    })
+  }
+
+  // initialize from first building if present
+  if (buildingList.length > 0) {
+    selectBuilding(0)
+  } else {
+    // fallback: generate default blocks
     generateBlocks(currentFloorCount)
     resetView()
     buildGUI()
