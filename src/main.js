@@ -324,25 +324,36 @@ toggleRotateBtn.addEventListener('click', () => {
 
 generateBlocks(currentFloorCount)
 // load multiple building files and initialize the selector
+// IMPORTANT: for Vite production builds these JSON files must be placed in the
+// `public/` folder so they are served from the web root (`/building00.json`).
+// during development the code will also try `/src/` locations to make testing
+// easier, but `/src/` is not available after build.
 async function loadData() {
   const files = ['building00.json', 'building01.json', 'building02.json']
-  const base = '/src/'
   buildingList = []
 
-  for (const f of files) {
+  // helper to try fetching from possible locations
+  async function tryFetch(path) {
     try {
-      const res = await fetch(base + f)
-      if (!res.ok) continue
+      const r = await fetch(path)
+      if (r.ok) return r
+    } catch {}
+    return null
+  }
+
+  for (const f of files) {
+    let res = await tryFetch(`/src/${f}`)
+    if (!res) res = await tryFetch(`/${f}`)
+    if (!res) continue
+    try {
       const json = await res.json()
-      // accept either an array or a single object
       if (Array.isArray(json)) {
         json.forEach(item => buildingList.push(item))
       } else if (json && typeof json === 'object') {
         buildingList.push(json)
       }
     } catch (err) {
-      // ignore missing files
-      // console.warn('missing', f, err)
+      console.warn('could not parse', f, err)
     }
   }
 

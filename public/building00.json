@@ -1,0 +1,28 @@
+[
+  {
+    "buildingId": "B002",
+    "name": "Green Valley Residency",
+    "type": "Residential",
+    "address": {
+      "street": "Station Road",
+      "city": "Karjat",
+      "state": "Maharashtra",
+      "country": "India",
+      "pincode": "410201"
+    },
+    "yearBuilt": 2022,
+    "amenities": [
+      "Lift",
+      "Parking",
+      "Security",
+      "CCTV"
+    ],
+    "floors": [
+      {
+        "floorNumber": 1,
+        "totalFlats": 10,
+        "units": []
+      }
+    ]
+  }
+]

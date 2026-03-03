@@ -1,0 +1,15 @@
+[{
+    "buildingId": "B003",
+    "name": "Sunshine Apartments",
+    "type": "Residential",
+    "address": {
+      "street": "Market Lane",
+      "city": "Pune",
+      "state": "Maharashtra",
+      "country": "India",
+      "pincode": "411001"
+    },
+    "yearBuilt": 2018,
+    "amenities": ["Gym", "Pool"],
+    "floors": [{"floorNumber": 1, "totalFlats": 5, "units": []}, {"floorNumber": 2, "totalFlats": 5, "units": []}]
+}]
