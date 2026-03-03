@@ -81,6 +81,7 @@ const spacing = 0.1
 let autoRotate = true
 let currentFloorCount = 5
 let currentFocusedFloor = 0 // 0 = none, 1..n = floor index
+let buildingData = null
 
 // UI references
 const navButtonsContainer = document.getElementById('navButtons')
@@ -138,6 +139,7 @@ function resetView() {
   targetLookAt.set(0, centerY, 0)
   currentFocusedFloor = 0
   updateBlockStyles()
+  showFloorInfo(0)
   if (activeCamera === orthoCamera) {
     // compute zoom that fits both width and full stack height
     const totalHeight = (currentFloorCount - 1) * (blockHeight + spacing)
@@ -150,6 +152,7 @@ function resetView() {
 function focusFloor(floorIndex) {
   currentFocusedFloor = floorIndex
   updateBlockStyles()
+  showFloorInfo(floorIndex)
   const floorY = (floorIndex - 1) * (blockHeight + spacing)
   targetCameraY = floorY + 2
   targetLookAt.set(0, floorY, 0)
@@ -173,6 +176,49 @@ function focusFloor(floorIndex) {
       if (ctrl) ctrl.setValue(newZoom)
     }
   }
+}
+
+// show building info in side panel
+function showBuildingInfo() {
+  if (!buildingData) return
+  const name = document.getElementById('buildingName')
+  const type = document.getElementById('buildingType')
+  const year = document.getElementById('buildingYear')
+  const addr = document.getElementById('buildingAddress')
+  const amenities = document.getElementById('buildingAmenities')
+
+  name.textContent = buildingData.name || buildingData.buildingId || 'Building'
+  type.textContent = buildingData.type || '-'
+  year.textContent = buildingData.yearBuilt || '-'
+  const a = buildingData.address || {}
+  addr.innerHTML = `${a.street || ''}<br>${a.city || ''}, ${a.state || ''} ${a.pincode || ''}<br>${a.country || ''}`
+  amenities.innerHTML = ''
+  (buildingData.amenities || []).forEach(am => {
+    const li = document.createElement('li')
+    li.textContent = am
+    amenities.appendChild(li)
+  })
+}
+
+// show floor details in side panel
+function showFloorInfo(floorIndex) {
+  const panel = document.getElementById('floorDetails')
+  if (!buildingData) { panel.textContent = 'No data' ; return }
+  if (!floorIndex) { panel.innerHTML = 'Select a floor to see details' ; return }
+  const floor = buildingData.floors.find(f => f.floorNumber === floorIndex) || buildingData.floors[floorIndex-1]
+  if (!floor) { panel.textContent = 'Floor data not found' ; return }
+
+  // build HTML summary
+  let html = `<div><strong>Floor:</strong> ${floor.floorNumber}</div>`
+  html += `<div><strong>Total Flats:</strong> ${floor.totalFlats}</div>`
+  html += `<div style="margin-top:8px"><strong>Units:</strong></div>`
+  html += '<ul style="margin-top:6px">'
+  floor.units.forEach(u => {
+    const tenant = u.tenant ? `${u.tenant.name} (${u.tenant.phone})` : '—'
+    html += `<li>${u.unitNumber} — ${u.type} — ${u.status} — ${tenant}</li>`
+  })
+  html += '</ul>'
+  panel.innerHTML = html
 }
 
 
@@ -259,10 +305,35 @@ toggleRotateBtn.addEventListener('click', () => {
   toggleRotateBtn.textContent = autoRotate ? 'Pause Rotate' : 'Resume Rotate'
 })
 
-// initial generation
 generateBlocks(currentFloorCount)
-// recenter camera for default view
-resetView()
+// load data and initialize scene from file
+async function loadData() {
+  try {
+    const res = await fetch('/src/data.json')
+    const arr = await res.json()
+    if (!arr || arr.length === 0) return
+    buildingData = arr[0]
+    // set floor count from data
+    currentFloorCount = (buildingData.floors || []).length || currentFloorCount
+    // update slider max/value
+    floorCountInput.max = Math.max(1, currentFloorCount)
+    floorCountInput.value = currentFloorCount
+    floorCountLabel.textContent = String(currentFloorCount)
+    // generate blocks and recentre
+    generateBlocks(currentFloorCount)
+    resetView()
+    showBuildingInfo()
+    buildGUI()
+  } catch (e) {
+    console.error('Failed to load data.json', e)
+    // fallback to default generation
+    generateBlocks(currentFloorCount)
+    resetView()
+    buildGUI()
+  }
+}
+
+loadData()
 
 // Build dat-gui panel
 let gui

@@ -85,6 +85,28 @@ label { color: #ffcc00; font-weight: 600; }
   font-size: 13px;
 }
 
+/* Info panel on the right */
+#info {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  width: 320px;
+  max-height: calc(100vh - 24px);
+  overflow: auto;
+  background: rgba(18,18,20,0.85);
+  color: #fff;
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  z-index: 20;
+  font-size: 14px;
+}
+
+#info h2, #info h3 { margin: 0 0 8px 0; color: #ffcc00 }
+#info ul { margin: 6px 0 0 16px }
+#buildingAddress { margin-top:4px; color:#ddd }
+#floorDetails { margin-top:6px; color:#ddd }
+
   @media (max-width: 1024px) {
     font-size: 16px;
   }
